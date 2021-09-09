@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <title>Minesweeper</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+  </head>
+  <body><center>
+    <h1>Minesweeper</h1><br>
+    <div id="cells"></div>
+    <div id="rows"></div>
+    <div id="bombs"></div>
+    <!--a href="https://icons8.com/icon/srpvmRclfmRR/bomb">Bomb icon by Icons8</a-->
+    <div id="noOfElements"></div>
+    <button id="beginner" onclick="generateBoard(9, 9)">Beginner</button>
+    <button id="intermediate" onclick="generateBoard(16, 16)">Intermediate</button>
+    <button id="expert" onclick="generateBoard(16, 30)">Expert</button>
+    <br><br>
+    <table id="table"></table>
+    <br>
+    <strong><div id="message" style="font-size:20px;"></div><strong>
+    <br>
+    <button id="start" style="visibility:hidden" onclick="location.reload()">One More Time?</button>
+  </center>
+    <script src="index.js"></script>
+  </body>
+</html>
