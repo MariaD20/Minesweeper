@@ -1,7 +1,11 @@
 let rows = document.getElementById('rows');
 let cells = document.getElementById('cells');
-var bombs = document.getElementById('bombs');
+let bombs = document.getElementById('bombs');
 let noOfElements = document.getElementById('noOfElements');
+let bombsFound = 0;
+let bombsPlaced;
+let flags = 0;
+document.getElementById('flags').innerHTML = flags;
 
 function generateBoard(noOfRows, noOfCells) {
   let getId = 0;
@@ -18,13 +22,8 @@ function generateBoard(noOfRows, noOfCells) {
         td.style.textAlign= "center";
         td.onclick = function() {
           checkCell(i, j);
-        }  //, {once: true});*/
-        /*td.addEventListener ('click', ev => {
-        }, {once:true});*/
-        td.oncontextmenu = function() {
-          putFlag(i, j);
-          return false;
-        }
+        };
+        td.addEventListener('contextmenu', putFlag);
       }
     }
     rows = noOfRows;
@@ -37,9 +36,10 @@ function generateBoard(noOfRows, noOfCells) {
     } else {
       bombs = 99;
     }
+  document.getElementById('total').innerHTML = bombs;
+  bombsPlaced = bombs;
   putBombs();
 }
-
 
 function putBombs() {
    while (bombs > 0) {
@@ -91,8 +91,8 @@ function checkCell(i, j) {
   } else if (table.rows[i].cells[j].value == 'false' && table.rows[i].cells[j].name != 0) {
     table.rows[i].cells[j].textContent = table.rows[i].cells[j].name;
   } else if (table.rows[i].cells[j].value == 'false' && table.rows[i].cells[j].name == 0) {
-      table.rows[i].cells[j].textContent = ' ';
-      showMoreCells(i, j);
+    table.rows[i].cells[j].textContent = ' ';
+    showMoreCells(i, j);
   }
 }
 
@@ -121,10 +121,15 @@ function showMoreCells(i, j) {
   }
 }
 
-function putFlag(row, col) {
-  let idCell = row + "." + col;
-  document.getElementById(idCell).style.backgroundImage = "url('img/flag.png')";
-  return false;
+function putFlag(ev) {
+  ev.preventDefault();
+  document.getElementById(ev.target.id).style.backgroundImage = "url('img/flag.png')";
+  ++flags;
+  document.getElementById('flags').innerHTML = flags;
+  if (ev.target.value == 'true') {
+    ++bombsFound;
+    checkWinner();
+  }
 }
 
 function endGame() {
@@ -137,13 +142,18 @@ function endGame() {
         table.rows[i].cells[j].textContent = table.rows[i].cells[j].name;
       }
       if (table.rows[i].cells[j].value == "true") {
-        var img = document.createElement('img');
-        img.src = 'bomb.png'
-        //table.rows[i].cells[j].style.backgroundImage = "url('img/bomb.png')";
-        table.rows[i].cells[j].src = "bomb.png";
+        table.rows[i].cells[j].style.backgroundImage = "url('img/bomb.png')";
       }
     }
   }
   var button = document.getElementById("start");
-    button.style.visibility = "visible";
+  button.style.visibility = "visible";
+}
+
+function checkWinner() {
+  if (bombsFound == bombsPlaced) {
+    document.getElementById("message").innerHTML = "Congratulations! You won the game!";
+  }
+  var button = document.getElementById("start");
+  button.style.visibility = "visible";
 }
