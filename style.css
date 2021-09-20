@@ -1,0 +1,19 @@
+td {
+  border: 1px solid #333;
+  width: 30px;
+  height: 30px;
+  background-Color: grey;
+  text-align: center;
+}
+
+.btn-secondary {
+  visibility: hidden;
+}
+
+.message {
+  font-size: 20px;
+}
+
+.white {
+  background-Color: white;
+}

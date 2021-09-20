@@ -6,7 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <title>Minesweeper</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="style.css">
   </head>
   <body><center>
     <h1>Minesweeper</h1><br>
@@ -24,9 +24,9 @@
     <br><br>
     <table id="table"></table>
     <br>
-    <strong><div id="message" style="font-size:20px;"></div><strong>
+    <strong><div id="message" class="message"></div><strong>
     <br>
-    <button id="start" style="visibility:hidden" onclick="location.reload()">One More Time?</button>
+    <button class="btn btn-secondary" id="start" onclick="location.reload()">One More Time?</button>
   </center>
     <script src="index.js"></script>
   </body>

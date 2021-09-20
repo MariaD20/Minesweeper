@@ -13,13 +13,8 @@ function generateBoard(noOfRows, noOfCells) {
     let tr = table.insertRow(i);
     for (let j = 0; j < noOfCells; ++j) {
         let td = tr.insertCell(j);
-        td.id = getId++;
-        td.value = 'false';
-        td.style.border='1px solid #333';
-        td.style.width= '30px';
-        td.style.height= '30px';
-        td.style.backgroundColor = "grey";
-        td.style.textAlign= "center";
+        td.id = getId++; // fiecare celula are un ID
+        td.value = 'false'; // in false vs true voi retine daca este bomba nu este bomba pe celula sau este (daca este, value este true)
         td.onclick = function() {
           checkCell(i, j);
         };
@@ -47,7 +42,7 @@ function putBombs() {
     for (var i = 0; i < rows; ++i) {
       for (var j = 0; j < cells; ++j) {
         if (table.rows[i].cells[j].id == randomValue && table.rows[i].cells[j].value == 'false') {
-          table.rows[i].cells[j].value = 'true';
+          table.rows[i].cells[j].value = 'true'; // aici am pus o bomba si am schimbat value la true
           --bombs;
         }
       }
@@ -72,7 +67,7 @@ function setCellsValue() {
           } else if (indexCol == cells) {
             continue;
           }
-          if (table.rows[indexLine].cells[indexCol].value == 'true') {
+          if (table.rows[indexLine].cells[indexCol].value == 'true') {//numar cate bombe sunt de jur imprejurul unei celule
             ++countIfBombs;
           }
         }
@@ -85,7 +80,7 @@ function setCellsValue() {
 }
 
 function checkCell(i, j) {
-  table.rows[i].cells[j].style.backgroundColor = "white";
+  table.rows[i].cells[j].className = "white"; //ma folosesc de clasa in CSS pentru a schimba background-ul unei celule descoperite in alb
   if (table.rows[i].cells[j].value == 'true') {
     endGame();
   } else if (table.rows[i].cells[j].value == 'false' && table.rows[i].cells[j].name != 0) {
@@ -110,10 +105,10 @@ function showMoreCells(i, j) {
         continue;
       }
       if (table.rows[row].cells[col].name != 0) {
-        table.rows[row].cells[col].style.backgroundColor = "white";
+        table.rows[row].cells[col].className = "white";
         table.rows[row].cells[col].textContent = table.rows[row].cells[col].name;
-      } else if (table.rows[row].cells[col].name == 0 && table.rows[row].cells[col].style.backgroundColor == "grey") {
-        table.rows[row].cells[col].style.backgroundColor = "white";
+      } else if (table.rows[row].cells[col].name == 0 && table.rows[row].cells[col].className != "white") {
+        table.rows[row].cells[col].className = "white";
         table.rows[row].cells[col].textContent = ' ';
         showMoreCells(row, col);
       }
