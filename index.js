@@ -8,7 +8,7 @@ let flags = 0;
 document.getElementById('flags').innerHTML = flags;
 
 function generateBoard(noOfRows, noOfCells) {
-  let getId = 0;
+  let getId = 1;
   for (let i = 0; i < noOfRows; ++i) {
     let tr = table.insertRow(i);
     for (let j = 0; j < noOfCells; ++j) {
@@ -38,7 +38,7 @@ function generateBoard(noOfRows, noOfCells) {
 
 function putBombs() {
    while (bombs > 0) {
-    var randomValue = Math.floor(Math.random() * noOfElements);
+    var randomValue = (Math.floor(Math.random() * noOfElements) + 1);
     for (var i = 0; i < rows; ++i) {
       for (var j = 0; j < cells; ++j) {
         if (table.rows[i].cells[j].id == randomValue && table.rows[i].cells[j].value == 'false') {
@@ -54,25 +54,17 @@ function putBombs() {
 function setCellsValue() {
   for (var i = 0; i < rows; ++i) {
     for (var j = 0; j < cells; ++j) {
-      countIfBombs = 0;
-      for (var indexLine = i - 1; indexLine <= i + 1; ++indexLine) {
-        for (var indexCol = j - 1; indexCol <= j + 1; ++indexCol) {
-          if (i == 0 && indexLine == i - 1) {
-            ++indexLine;
-          } else if (indexLine == rows) {
-            continue;
-          }
-          if (j == 0 && indexCol == j - 1) {
-            ++ indexCol;
-          } else if (indexCol == cells) {
-            continue;
-          }
-          if (table.rows[indexLine].cells[indexCol].value == 'true') {//numar cate bombe sunt de jur imprejurul unei celule
-            ++countIfBombs;
+      if (table.rows[i].cells[j].value == 'false') {
+        countIfBombs = 0;
+        for (var indexLine = i - 1; indexLine <= i + 1; ++indexLine) {
+          for (var indexCol = j - 1; indexCol <= j + 1; ++indexCol) {
+            if (indexLine >= 0 && indexLine < rows && indexCol >= 0 && indexCol < cells) {
+              if (table.rows[indexLine].cells[indexCol].value == 'true') {
+                ++countIfBombs;
+              }
+            }
           }
         }
-      }
-      if (table.rows[i].cells[j].value == 'false') {
         table.rows[i].cells[j].name = countIfBombs;
       }
     }
@@ -94,23 +86,15 @@ function checkCell(i, j) {
 function showMoreCells(i, j) {
   for (var row = i - 1; row <= i + 1; ++row) {
     for (var col = j - 1; col <= j + 1; ++col) {
-      if (i == 0 && row == i - 1) {
-        ++row;
-      } else if (row == rows) {
-        continue;
-      }
-      if (j == 0 && col == j - 1) {
-        ++col;
-      } else if (col == cells) {
-        continue;
-      }
-      if (table.rows[row].cells[col].name != 0) {
-        table.rows[row].cells[col].className = "white";
-        table.rows[row].cells[col].textContent = table.rows[row].cells[col].name;
-      } else if (table.rows[row].cells[col].name == 0 && table.rows[row].cells[col].className != "white") {
-        table.rows[row].cells[col].className = "white";
-        table.rows[row].cells[col].textContent = ' ';
-        showMoreCells(row, col);
+      if (row >= 0 && row < rows && col >= 0 && col < cells) {
+        if (table.rows[row].cells[col].name != 0) {
+          table.rows[row].cells[col].className = "white";
+          table.rows[row].cells[col].textContent = table.rows[row].cells[col].name;
+        } else if (table.rows[row].cells[col].name == 0 && table.rows[row].cells[col].className != "white") {
+          table.rows[row].cells[col].className = "white";
+          table.rows[row].cells[col].textContent = ' ';
+          showMoreCells(row, col);
+        }
       }
     }
   }
